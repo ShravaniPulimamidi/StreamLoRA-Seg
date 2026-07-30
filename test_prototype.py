@@ -1,15 +1,17 @@
 import torch
 
-from adaptation.prototype import PrototypeMemory
+from adaptation.prototype import PrototypeBank
 
-prototype_memory = PrototypeMemory()
+prototype = PrototypeBank()
 
-# Simulate features for class 0
-features = torch.randn(10, 512)
+features = torch.randn(8, 512)
 
-prototype_memory.update(0, features)
+prototype.update(features)
 
-prototype = prototype_memory.get(0)
+print("Prototype Shape:", prototype.get().shape)
 
-print("Prototype shape:", prototype.shape)
-print("Stored classes:", len(prototype_memory))
+features2 = torch.randn(8, 512)
+
+prototype.update(features2)
+
+print("Updated Prototype Shape:", prototype.get().shape)

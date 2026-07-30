@@ -1,29 +1,31 @@
 import torch
 
 
-class PrototypeMemory:
+class PrototypeBank:
     """
-    Stores class prototypes computed from feature vectors.
+    Maintains a running prototype feature.
     """
 
     def __init__(self):
-        self.prototypes = {}
+        self.prototype = None
 
-    def update(self, class_id, features):
+    def update(self, features):
         """
-        Compute prototype as mean feature vector.
+        features: N x D
         """
-        prototype = features.mean(dim=0)
-        self.prototypes[class_id] = prototype.detach().cpu()
+        if features is None:
+            return
 
-    def get(self, class_id):
-        """
-        Retrieve prototype for a class.
-        """
-        return self.prototypes.get(class_id, None)
+        mean_feature = features.mean(dim=0)
 
-    def clear(self):
-        self.prototypes = {}
+        if self.prototype is None:
+            self.prototype = mean_feature
+        else:
+            # Exponential moving average
+            self.prototype = 0.9 * self.prototype + 0.1 * mean_feature
 
-    def __len__(self):
-        return len(self.prototypes)
+    def get(self):
+        return self.prototype
+
+    def reset(self):
+        self.prototype = None
