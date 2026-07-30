@@ -1,13 +1,12 @@
 import torch
 
-from models.streamlora import StreamLoRASeg
+from models.streamlora import StreamLoRA
 
+model = StreamLoRA()
 
-model = StreamLoRASeg()
+x = torch.randn(2, 3, 224, 224)
 
-dummy = torch.randn(2, 3, 224, 224)
+y = model(x)
 
-output = model(dummy)
-
-print("Input :", dummy.shape)
-print("Output:", output.shape)
+print("Input :", x.shape)
+print("Output:", y.shape)

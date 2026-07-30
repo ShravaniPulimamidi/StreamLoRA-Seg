@@ -6,44 +6,44 @@ from models.lora import LoRALayer
 from models.segmentation_head import SegmentationHead
 
 
-class StreamLoRASeg(nn.Module):
-    """
-    StreamLoRA-Seg:
-    CLIP Backbone
-          ↓
-       LoRA Adapter
-          ↓
-    Segmentation Head
-    """
+class StreamLoRA(nn.Module):
 
     def __init__(self, num_classes=19):
         super().__init__()
 
-        # CLIP image encoder
         self.backbone = CLIPBackbone()
 
-        # LoRA adaptation
         self.lora = LoRALayer(
             in_features=512,
-            out_features=512,
-            rank=8
+            out_features=512
         )
 
-        # Segmentation decoder
         self.segmentation_head = SegmentationHead(
             in_channels=512,
             num_classes=num_classes
         )
 
-    def forward(self, x):
+    def forward(self, images):
 
-        # Extract CLIP features
-        features = self.backbone(x)
+        # CLIP image encoder
+        features = self.backbone(images)
 
-        # Apply LoRA adaptation
+        # Apply LoRA
         features = self.lora(features)
 
-        # Segmentation prediction
+        # Convert feature vector to feature map
+        B = features.shape[0]
+
+        features = features.view(B, 512, 1, 1)
+
+        features = torch.nn.functional.interpolate(
+            features,
+            size=(32, 32),
+            mode="bilinear",
+            align_corners=False
+        )
+
+        # Pixel-wise prediction
         output = self.segmentation_head(features)
 
         return output
