@@ -1,7 +1,10 @@
 torch
 torchvision
+open_clip_torch
+timm
 numpy
 opencv-python
+Pillow
 tqdm
 matplotlib
-Pillow
+PyYAML

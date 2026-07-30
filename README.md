@@ -1,20 +1,28 @@
 # StreamLoRA-Seg
 
-Continual Parameter-Efficient Test-Time Adaptation for Open-Vocabulary Semantic Segmentation in Autonomous Driving.
-
-## Project Status
-
-🚧 Under Development
+Continual Parameter-Efficient Test-Time Adaptation for Open-Vocabulary Semantic Segmentation.
 
 ## Features
 
-- Open-Vocabulary Semantic Segmentation
-- CLIP Vision Encoder
+- CLIP Vision Transformer
 - LoRA Adaptation
-- Continual Test-Time Adaptation
-- Memory Bank
-- Autonomous Driving Evaluation
+- Continual Test-Time Learning
+- Prototype Memory
+- Entropy Minimization
+- Open Vocabulary Segmentation
 
-## Author
+## Dataset
 
-Shravani Pulimamidi
+ACDC Dataset
+
+## Installation
+
+pip install -r requirements.txt
+
+## Train
+
+python train.py
+
+## Evaluate
+
+python evaluate.py
