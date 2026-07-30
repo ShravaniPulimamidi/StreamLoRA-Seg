@@ -5,10 +5,11 @@ class Config:
     # ==========================
     # Dataset
     # ==========================
-    dataset = "BDD100K"
+    dataset = "ACDC"
+    data_root = "./data"
 
-    train_root = "./data/BDD100K/train"
-    val_root = "./data/BDD100K/val"
+    train_root = "./data"
+    val_root = "./data"
 
     image_size = (512, 512)
     num_classes = 19
@@ -39,18 +40,14 @@ class Config:
     # Test-Time Adaptation
     # ==========================
     entropy_weight = 1.0
-
     memory_size = 256
-
     adaptation_steps = 1
 
     # ==========================
     # Hardware
     # ==========================
     device = "cuda"
-
     num_workers = 4
-
     seed = 42
 
 
